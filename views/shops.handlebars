@@ -1,0 +1,33 @@
+{{#section 'head'}}
+<title>Shops | Delivery App</title>
+{{/section}}
+<body>
+    <div class="container pt-3">
+        <div class="d-flex align-items-center justify-content-end py-3">
+            <a href="/shops/add">
+                <button type="button" class="btn btn-primary">ADD SHOP</button>
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Contact No.</th>
+                    <th class="col">Owner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each shops}}
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+</body>

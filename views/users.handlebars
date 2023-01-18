@@ -1,0 +1,49 @@
+{{#section 'head'}}
+<title>Users | Delivery App</title>
+{{/section}}
+<body>
+    <body>
+        <div class="container pt-3">
+            <div class="d-flex align-items-center justify-content-end py-3">
+                <a href="/users/add">
+                    <button type="button" class="btn btn-primary">ADD USER</button>
+                </a>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Contact No.</th>
+                        <th scope="col">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each employee}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{firstname}} {{lastname}}</td>
+                        <td>{{email}}</td>
+                        <td>{{tel}}</td>
+                        <td>
+                            <!-- Example single danger button -->
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-secondary dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    Action
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">UPGRADE USER</a></li>
+                                    <li><a class="dropdown-item text-danger" href="/users/delete/{{id}}">DELETE</a></li>
+                                    <li><a class="dropdown-item" href="#"></a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</body>

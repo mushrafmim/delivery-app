@@ -16,6 +16,7 @@ app.post('/', (req, res) => res.redirect('/users'))
 app.get('/users', UserHandler.employeePage)
 app.get('/users/add', (req, res) => res.render('forms/adduser'))
 app.post('/users/add', UserHandler.addEmployee)
+app.get('/users/upgrade/:id', UserHandler.upgradeForm)
 app.get('/users/delete/:id', UserHandler.deleteOne)
 
 app.get('/shops', ShopHandler.shopsPage)

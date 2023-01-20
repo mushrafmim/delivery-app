@@ -1,13 +1,18 @@
 {{#section 'head'}}
-<title>Users | Delivery App</title>
+<title>Employees | Delivery App</title>
 {{/section}}
 <body>
     <body>
         <div class="container pt-3">
+            <div class="d-flex align-items-center justify-content-end py-3">
+                <a href="/employees/add">
+                    <button type="button" class="btn btn-primary">ADD EMPLOYEE</button>
+                </a>
+            </div>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">ID</th>
                         <th scope="col">NAME</th>
                         <th scope="col">ROLE</th>
                         <th scope="col">EMAIL</th>
@@ -16,13 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each users}}
+                    {{#each employees}}
                     <tr>
                         <th scope="row">{{id}}</th>
-                        <td>{{'Employee.firstname'}} {{'Employee.lastname'}}</td>
+                        <td>{{firstname}} {{lastname}}</td>
                         <td>{{role}}</td>
-                        <td>{{'Employee.email'}}</td>
-                        <td>{{'Employee.tel'}}</td>
+                        <td>{{email}}</td>
+                        <td>{{tel}}</td>
                         <td>
                             <!-- Example single danger button -->
                             <div class="btn-group">
@@ -31,8 +36,13 @@
                                     Action
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item text-warning" href="/users/edit/{{id}}">EDIT</a></li>
-                                    <li><a class="dropdown-item text-danger" href="/users/delete/{{id}}">DELETE</a></li>
+                                    {{#if isDelivery}}
+                                    <li><a href="/employees/upgrade/{{id}}" class="dropdown-item">CHANGE ROLE</a></li>
+                                    {{/if}}
+                                    <li><a class="dropdown-item text-warning" href="/employees/edit/{{id}}">EDIT</a>
+                                    </li>
+                                    <li><a class="dropdown-item text-danger" href="/employees/delete/{{id}}">DELETE</a>
+                                    </li>
                                 </ul>
                             </div>
                         </td>

@@ -3,5 +3,16 @@
 {{/section}}
 
 <body>
-    Orders Page
+    <form action="/orders/add" method="post">
+        <h1 class="text-center">MAKE AN ORDER</h1>
+        <div class="mb-3">
+            <label for="textInputShopName" class="form-label">ORDER NAME</label>
+            <input type="text" name="name" class="form-control" id="textInputShopName">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">DESCRIPTION</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit">PUBLISH</button>
+    </form>
 </body>

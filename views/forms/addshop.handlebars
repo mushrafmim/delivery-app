@@ -5,7 +5,7 @@
                 <button type="button" class="btn btn-danger">CANCEL</button>
             </a>
         </div>
-        <form>
+        <form method="post" action="/shops/add">
             <h2 class="text-center">ADD NEW SHOP</h2>
             <div class="mb-3">
                 <label for="textInputShopName" class="form-label">Shop Name</label>
@@ -13,7 +13,7 @@
             </div>
             <div class="mb-3">
                 <label for="textInputAddressNo" class="form-label">Address No.</label>
-                <input type="text" name="addressno" class="form-control" id="textInputAddressNo">
+                <input type="text" name="addressNo" class="form-control" id="textInputAddressNo">
             </div>
             <div class="mb-3">
                 <label for="textInputStreet" class="form-label">Street</label>
@@ -37,11 +37,10 @@
             </div>
             <div class="mb-3">
                 <label for="selectInputOwnerId" class="form-label">Owner</label>
-                <select id="selectInputOwnerId" class="form-select" aria-label="Default select example">
-                    <option selected></option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
+                <select id="selectInputOwnerId" name="ownerId" class="form-select" aria-label="Default select example">
+                    {{#each shopOwners}}
+                    <option value="{{id}}" selected>{{username}}</option>
+                    {{/each}}
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>

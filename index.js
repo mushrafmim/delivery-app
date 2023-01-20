@@ -2,27 +2,32 @@ const app = require('./server')
 const dotenv = require('dotenv');
 const ShopHandler = require('./handlers/shop.handler');
 const { sequelize } = require('./models');
-const UserHandler = require('./handlers/user.handlers');
+const EmployeeHandler = require('./handlers/employee.handlers');
+const UserHandler = require('./handlers/user.handler');
+
+const employeeRoutes = require('./routes/employee.routes')
+const userRoutes = require('./routes/user.routes')
+const shopRoutes = require('./routes/shop.routes')
+const orderRoutes = require('./routes/order.routes');
+const auth = require('./middlewares/auth');
 
 dotenv.config()
 
 
 const port = process.env.PORT || 8000
 
-app.get('/', (req, res) => res.render('login', { noNavbar: true }))
+app.get('/', (req, res) => {
+    res.render('login', { noNavbar: true })
+})
 
-app.post('/', (req, res) => res.redirect('/users'))
+app.post('/', UserHandler.loginUser)
 
-app.get('/users', UserHandler.employeePage)
-app.get('/users/add', (req, res) => res.render('forms/adduser'))
-app.post('/users/add', UserHandler.addEmployee)
-app.get('/users/upgrade/:id', UserHandler.upgradeForm)
-app.get('/users/delete/:id', UserHandler.deleteOne)
+app.use(auth)
 
-app.get('/shops', ShopHandler.shopsPage)
-app.get('/shops/add', (req, res) => res.render('forms/addshop'))
-
-app.get('/orders', (req, res) => res.render('orders'))
+app.use('/employees', employeeRoutes)
+app.use('/users', userRoutes)
+app.use('/shops', shopRoutes)
+app.use('/orders', orderRoutes)
 
 
 async function main() {

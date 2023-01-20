@@ -13,7 +13,6 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Contact No.</th>
                     <th class="col">Owner</th>
                 </tr>
@@ -21,10 +20,10 @@
             <tbody>
                 {{#each shops}}
                 <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                    <th scope="row">{{id}}</th>
+                    <td>{{name}}</td>
+                    <td>{{tel}}</td>
+                    <td>{{ownerId}}</td>
                 </tr>
                 {{/each}}
             </tbody>

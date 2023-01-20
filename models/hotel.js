@@ -55,15 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notNull: { msg: 'email cannot be null' },
         notEmpty: { msg: 'email cannot be empty' },
-        isEmail: { msg: 'email is in the correct format' },
-        async isUnique(value) {
-          const user = await Employee.findOne(
-            { where: { email: value } }
-          )
-          if (user !== null && user.id !== this.id) {
-            throw new Error('Email is not unique.')
-          }
-        }
+        isEmail: { msg: 'email is in the correct format' }
       }
     },
   }, {

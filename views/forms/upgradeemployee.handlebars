@@ -1,0 +1,25 @@
+<body>
+    <div class="container pt-3">
+        <div class="d-flex align-items-center justify-content-end py-3">
+            <a href="/users">
+                <button type="button" class="btn btn-danger">CANCEL</button>
+            </a>
+        </div>
+        <form action="/users/add" method="post">
+            <h2 class="text-center">{{#if edit}}EDIT{{else}}ADD{{/if}} USER</h2>
+            <div class="mb-3">
+                <label for="textInputStreet" class="form-label">Email</label>
+                <input type="email" name="email" value="{{employee.email}}" class="form-control" id="textInputEmail">
+            </div>
+            <div class="mb-3">
+                <label for="textInputStreet" class="form-label">Email</label>
+                <input type="email" name="email" value="{{employee.email}}" class="form-control" id="textInputEmail">
+            </div>
+            <div class="mb-3">
+                <label for="textInputContactNo" class="form-label">Contact No</label>
+                <input type="tel" name="tel" value="{{employee.tel}}" class="form-control" id="textInputContactNo">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</body>

@@ -1,0 +1,49 @@
+<body>
+    <div class="container pt-3">
+        <div class="d-flex align-items-center justify-content-end py-3">
+            <a href="/users">
+                <button type="button" class="btn btn-danger">CANCEL</button>
+            </a>
+        </div>
+        <form action="{{#if edit}}/users/edit/{{user.id}}{{else}}/users/add{{/if}}" method="post">
+            <h2 class="text-center">{{#if edit}}EDIT{{else}}ADD{{/if}} USER</h2>
+            <div class="mb-3">
+                <label for="textInputEmployeeName" class="form-label">EMPLOYEE ID</label>
+                <input type="email" name="empId" value="{{employee.id}}" class="form-control" id="textInputEmail"
+                    readonly>
+            </div>
+            {{#unless edit}}
+            <div class="mb-3">
+                <label for="textInputEmployeeName" class="form-label">Name</label>
+                <input type="email" name="email" value="{{employee.firstname}} {{employee.lastname}}"
+                    class="form-control" id="textInputEmail" readonly>
+            </div>
+            {{/unless}}
+            <div class="mb-3">
+                <label for="selectInputUserRole" class="form-label">Role</label>
+                <select name="role" id="selectInputUserRole" class="form-select" aria-label="Default select example">
+                    <option></option>
+                    <option value="user">Shop Owner</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="textInputPassword" class="form-label">Username</label>
+                <input type="text" value="{{employee.username}}" name="username" class="form-control"
+                    id="textInputUsername">
+            </div>
+            <div class="mb-3">
+                <label for="textInputPassword" class="form-label">Password</label>
+                <input type="password" value="{{employee.password}}" name="password" class="form-control"
+                    id="textInputPassword">
+            </div>
+            <div class="mb-3">
+                <label for="textInputConfirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" value="{{employee.password}}" name="confirm_password" class="form-control"
+                    id="textInputConfirmPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">RESET</button>
+        </form>
+    </div>
+</body>

@@ -2,3 +2,7 @@ form {
     max-width: 500px;
     margin: 0rem auto;
 }
+
+textarea {
+    resize: none;
+}

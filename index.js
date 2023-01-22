@@ -9,7 +9,7 @@ const employeeRoutes = require('./routes/employee.routes')
 const userRoutes = require('./routes/user.routes')
 const shopRoutes = require('./routes/shop.routes')
 const orderRoutes = require('./routes/order.routes');
-const auth = require('./middlewares/auth');
+const { validateToken } = require('./middlewares/auth');
 
 dotenv.config()
 
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 
 app.post('/', UserHandler.loginUser)
 
-app.use(auth)
+app.use(validateToken)
 
 app.use('/employees', employeeRoutes)
 app.use('/users', userRoutes)

@@ -7,13 +7,10 @@
     <title>SHOP</title>
 </head>
 <body>
-    {{> shopNavbar }}
+    {{> sAdminNavbar }}
     <div class="container pt-3">
         <div class="d-flex align-items-center justify-content-between py-3">
-            <h2>YOUR ORDERS</h2>
-            <a href="/orders/add">
-                <button type="button" class="btn btn-primary">PLACE ORDER</button>
-            </a>
+            <h2>HANDLE ORDERS</h2>
         </div>
         <table class="table">
             <thead>
@@ -31,15 +28,27 @@
                     <td>{{status}}</td>
                     <td>{{createdAt}}</td>
                     <td>
-                        <a href="/orders/delete/{{id}}">
-                            <button class="btn btn-danger">CANCEL</button>
-                        </a>
+                        <!-- Example single danger button -->
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Action
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item text-warning"
+                                        href="/orders/action/{{id}}?action=SHARED">ACCEPT</a>
+                                </li>
+                                <li><a class="dropdown-item text-danger"
+                                        href="/orders/action/{{id}}?action=DECLINED">DECLINE</a>
+                                </li>
+                            </ul>
+                        </div>
                     </td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </div>
-    {{> reload}}
+    {{> reload }}
 </body>
 </html>

@@ -1,11 +1,13 @@
 const { Router } = require('express')
 const EmployeeHandler = require('../handlers/employee.handlers')
 const UserHandler = require('../handlers/user.handler')
+const { isSuperAdmin } = require('../middlewares/auth')
 
 
 
 const router = Router()
 
+router.use(isSuperAdmin)
 
 router.route("/")
     .get(UserHandler.userPage)

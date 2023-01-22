@@ -11,19 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Employee, Shop, User }) {
       // define association here
-      this.belongsTo(Employee)
-      this.belongsTo(User)
-      this.belongsTo(Shop)
+      this.belongsTo(Employee, { foreignKey: 'deliveryId' })
+      this.belongsTo(User, { foreignKey: 'sharerId' })
+      this.belongsTo(Shop, { foreignKey: 'hotelId' })
     }
   }
   Order.init({
-    hotel_id: {
+    hotelId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    status: {
-      type: DataTypes.ENUM("PENDING", "SHARED", "CLAIMED", "DECLINED"),
+    title: {
+      type: DataTypes.STRING(70),
       allowNull: false
+    },
+    description: {
+      type: DataTypes.STRING(255),
+      allowNull: false
+    },
+    status: {
+      type: DataTypes.ENUM("PENDING", "SHARED", "CLAIMED", "DECLINED")
     },
     deliveryId: {
       type: DataTypes.INTEGER

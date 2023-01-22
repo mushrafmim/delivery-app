@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 
-module.exports = (req, res, next) => {
+function validateToken(req, res, next) {
     try {
         const { token } = req.cookies
 
@@ -16,4 +16,43 @@ module.exports = (req, res, next) => {
     } catch (e) {
         res.redirect('/')
     }
+}
+
+
+
+function isSuperAdmin(req, res, next) {
+    try {
+        const { role } = req.userObj
+
+        console.log(role)
+        if (role === 'superadmin') {
+            return next()
+        }
+
+        return res.render('login')
+    } catch (e) {
+        console.log(e)
+        res.render('login')
+    }
+}
+
+function isAdmin(req, res, next) {
+    try {
+        const { role } = req.userObj
+
+        if (role === 'admin' || role === 'superadmin') {
+            return next()
+        }
+
+        return res.render('login')
+    } catch (e) {
+        console.log(e)
+        res.render('login')
+    }
+}
+
+module.exports = {
+    isAdmin,
+    isSuperAdmin,
+    validateToken
 }

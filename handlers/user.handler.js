@@ -1,12 +1,10 @@
 const jwt = require('jsonwebtoken')
 
 
-const { Employee, User } = require('../models')
+const { Employee, User, Shop } = require('../models')
 class UserHandler {
 
     static async userPage(req, res) {
-
-        console.log(req.cookies)
 
         let users = await User.findAll({
             raw: true,
@@ -77,19 +75,45 @@ class UserHandler {
                 return res.render('login', { mismatch: true, noNavbar: true })
             }
 
-            if (password === user.password) {
 
-                // Getting the token.
-                const val = await jwt.sign({
-                    username,
-                    password,
-                    role: user.role
-                }, process.env.SECRET_KEY)
-
-                res.cookie('token', val)
+            if (password !== user.password) {
+                return res.render('login', { mismatch: true, noNavbar: true })
             }
 
-            res.render('orders')
+            const jwtObj = {
+                username,
+                password,
+                role: user.role
+            }
+
+            if (user.role === 'user') {
+                const shop = await Shop.findOne({
+                    where: {
+                        ownerId: user.id
+                    },
+                    raw: true
+                })
+
+                console.log(shop)
+
+                if (!shop) {
+                    return res.send("No Shop is assigned to you.")
+                }
+
+                jwtObj.shopId = shop.id;
+            }
+
+            // Getting the token.
+            const val = await jwt.sign(jwtObj, process.env.SECRET_KEY)
+
+            res.cookie('token', val)
+
+            if (user.role === 'user') {
+                res.redirect('/orders')
+            } else if (user.role === 'superadmin') {
+                res.redirect('/employees')
+            }
+
         } catch (e) {
             console.log(e)
             res.send('login')

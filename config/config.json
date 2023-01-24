@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "root",
-    "password": "Mm008911-*",
+    "username": "mushrafmim",
+    "password": "108762",
     "database": "deliverydb",
     "host": "127.0.0.1",
     "dialect": "mysql",

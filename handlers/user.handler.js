@@ -15,8 +15,11 @@ class UserHandler {
             let val
 
             switch (user.role) {
+                case 'superadmin':
+                    val = "Superadmin"
+                    break;
                 case 'admin':
-                    val = "Admin"
+                    val = "admin";
                     break;
                 case 'user':
                     val = "Shop Owner"

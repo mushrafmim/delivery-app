@@ -1,5 +1,9 @@
+const jwt = require('jsonwebtoken')
+const { v4 } = require('uuid')
+const handlebars = require('handlebars')
 const { Op } = require('sequelize')
-const { Shop, Order } = require('../models')
+const { Employee, User, Order, Shop } = require('../models')
+const EmailSender = require('../services/mailService')
 
 class OrderHandler {
 
@@ -41,11 +45,15 @@ class OrderHandler {
                     [Op.ne]: 'DECLINED'
                 }
             },
+            include: {
+                model: Employee
+            },
             raw: true,
             order: [
                 ['createdAt', 'DESC']
             ]
         })
+
 
 
         res.render('orders', { orders })
@@ -57,12 +65,59 @@ class OrderHandler {
 
     static async addOrder(req, res) {
         try {
+            // Getting the shop id from decoded token.
             const { shopId } = req.userObj
 
-            await Order.create({
+            const { title, description } = req.body
+
+            const order = await Order.create({
                 ...req.body,
                 hotelId: shopId
             })
+
+            const orderId = order.id
+
+            // Grabbing the shop details.
+            const shop = await Shop.findOne({
+                where: {
+                    id: shopId
+                }
+            })
+
+            // Grabbing the emails of delivery boys.
+            const deliveryBoys = await Employee.findAll({
+                raw: true,
+                attributes: ['email', 'id']
+            })
+
+            // mail Sender Object
+            const mailSender = new EmailSender()
+
+            const mail_template = require('./mail_format')
+            const template = handlebars.compile(mail_template)
+
+
+
+            for (const deliveryObj of deliveryBoys) {
+
+                const { id, email } = deliveryObj;
+
+                const token = await OrderHandler.tokenGenerator({ userId: id, orderId })
+
+                const html = template({
+                    shop: shop.name,
+                    title: title,
+                    description: description,
+                    link: `http://localhost:8000/order/claim?token=${token}`
+                })
+
+                // Sending email
+                mailSender.sendEmail({
+                    to: email,
+                    subject: `NEW ORDER FROM ${shop.name}`,
+                    html: html
+                })
+            }
 
             res.redirect('/orders')
         } catch (e) {
@@ -86,6 +141,36 @@ class OrderHandler {
             console.log(e)
             res.redirect('/orders')
         }
+    }
+
+    static async claimOrder(req, res) {
+        try {
+            const { token } = req.query
+            const decoded = jwt.verify(token, process.env.SECRET_KEY)
+
+            const { orderId, userId } = decoded
+
+            const result = await Order.update(
+                { status: 'CLAIMED', deliveryId: userId },
+                { where: { status: 'PENDING', id: orderId } }
+            )
+
+            if (result[0] === 1) {
+                res.render("ordersuccess")
+                return
+            } else {
+                res.render("orderfailiure")
+                return
+            }
+        } catch (e) {
+            res.send("Error")
+        }
+    }
+
+    static async tokenGenerator({ userId, orderId }) {
+        const val = await jwt.sign({ userId, orderId }, process.env.SECRET_KEY)
+
+        return val
     }
 }
 

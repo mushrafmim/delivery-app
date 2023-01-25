@@ -17,6 +17,7 @@ router.route("/add")
 
 router.route("/edit/:id")
     .get(EmployeeHandler.employeeForm)
+    .post(EmployeeHandler.editEmployee)
 
 router.route("/delete/:id")
     .get(EmployeeHandler.deleteOne)

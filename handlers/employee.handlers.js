@@ -1,5 +1,8 @@
 const { Employee, User } = require('../models')
+
+
 class EmployeeHandler {
+
 
     static async employeePage(req, res) {
 
@@ -43,18 +46,33 @@ class EmployeeHandler {
         }
 
         return res.render('forms/employee', { employee: {} })
-
-
     }
 
     static async addEmployee(req, res) {
-        console.log(req.body)
+
+        console.log(req.url)
         try {
             await Employee.create(req.body)
             res.redirect('/employees')
         } catch (e) {
             console.log(e)
             res.redirect('/employees')
+        }
+    }
+
+    static async editEmployee(req, res) {
+        try {
+            const { id } = req.params
+
+            await Employee.update(
+                req.body,
+                { where: { id } }
+            )
+
+            return res.redirect('/employee')
+        } catch (e) {
+            console.log(e)
+            return res.redirect('/employee')
         }
     }
 

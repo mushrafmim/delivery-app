@@ -8,31 +8,35 @@ const EmailSender = require('../services/mailService')
 class OrderHandler {
 
 
-    static async takeAction(req, res) {
-        const { action } = req.query
-        const { id } = req.params
-
-        if (!['SHARED', 'DECLINED'].includes(action)) {
-            return res.send("Error")
-        }
-
-        const result = await Order.update(
-            { status: action },
-            { where: { id, status: 'PENDING' } }
-        )
-
-        if (result[0] !== 0) {
-            res.redirect('/orders/list')
-        }
-    }
-
     static async handleOrdersPage(req, res) {
         const orders = await Order.findAll({
             raw: true
         })
 
+        orders.map((order) => ({
+            ...order,
+            is_pending: order.status === 'PENDING'
+        }))
+
         res.render('orderslist', { orders })
     }
+
+
+    static async declineOrder(req, res) {
+        const { id } = req.params
+
+        const result = await Order.update(
+            { status: 'DECLINED' },
+            { where: { id, status: 'PENDING' } }
+        )
+
+        console.log(result)
+
+        if (result[0] !== 0) {
+            return res.redirect('/orders/list')
+        }
+    }
+
 
     static async ordersPage(req, res) {
 

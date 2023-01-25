@@ -24,7 +24,6 @@ function isSuperAdmin(req, res, next) {
     try {
         const { role } = req.userObj
 
-        console.log(role)
         if (role === 'superadmin') {
             return next()
         }

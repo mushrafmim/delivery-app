@@ -21,6 +21,7 @@ SECRET_KEY=`any secret key`
 4. Setup database.
 ```
 SOURCE db-schema.sql
+SOURCE d-data.sql
 ```
 5. start the app
 ```

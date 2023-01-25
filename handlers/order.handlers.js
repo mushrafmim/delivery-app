@@ -91,7 +91,14 @@ class OrderHandler {
             // Grabbing the emails of delivery boys.
             const deliveryBoys = await Employee.findAll({
                 raw: true,
-                attributes: ['email', 'id']
+                attributes: ['email', 'id'],
+                include: {
+                    model: User,
+                    as: 'User'
+                },
+                where: {
+                    '$User.empId$': null
+                }
             })
 
             // mail Sender Object

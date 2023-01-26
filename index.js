@@ -21,6 +21,8 @@ app.get('/', (req, res) => {
     res.render('login', { noNavbar: true })
 })
 
+app.get('/logout', UserHandler.logoutUser)
+
 app.get('/mail', (req, res) => {
     res.render('mail', {
         title: "2 Chicken Buckets",

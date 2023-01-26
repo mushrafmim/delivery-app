@@ -30,24 +30,16 @@ class OrderHandler {
             { where: { id, status: 'PENDING' } }
         )
 
-        console.log(result)
-
         if (result[0] !== 0) {
             return res.redirect('/orders/list')
         }
     }
 
 
-    static async ordersPage(req, res) {
-
-        const { shopId } = req.userObj
-
+    static async adminOrdersPage(req, res) {
         const orders = await Order.findAll({
             where: {
-                hotelId: shopId,
-                status: {
-                    [Op.ne]: 'DECLINED'
-                }
+
             },
             include: {
                 model: Employee
@@ -58,9 +50,36 @@ class OrderHandler {
             ]
         })
 
-
-
         res.render('orders', { orders })
+    }
+
+
+    static async ordersPage(req, res) {
+        try {
+
+            const { shopId } = req.userObj
+
+            const orders = await Order.findAll({
+                where: {
+                    hotelId: shopId,
+                    status: {
+                        [Op.ne]: 'DECLINED'
+                    }
+                },
+                include: {
+                    model: Employee
+                },
+                raw: true,
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            })
+
+            return res.render('orders', { orders })
+        } catch (e) {
+            console.log(e)
+            res.render('orders')
+        }
     }
 
     static async ordersForm(req, res) {
@@ -118,6 +137,10 @@ class OrderHandler {
                 const html = template({
                     shop: shop.name,
                     title: title,
+                    addressNo: shop.addressNo,
+                    street: shop.street,
+                    city: shop.city,
+                    zipCode: shop.zipCode,
                     description: description,
                     link: `http://localhost:8000/order/claim?token=${token}`
                 })
@@ -184,7 +207,6 @@ class OrderHandler {
         return val
     }
 }
-
 
 
 module.exports = OrderHandler

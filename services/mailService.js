@@ -12,15 +12,7 @@ class EmailSender {
         })
     }
 
-    async sendDeliveryEmail(data) {
-        const { subject, content, emails } = data
-
-        for (const email of emails) {
-            this.sendEmail(email, subject, content)
-        }
-    }
-
-    sendEmail(to, subject, html) {
+    sendEmail({ to, subject, html }) {
         let mailOptions = {
             from: process.env.EMAIL,
             to: to,
@@ -35,4 +27,7 @@ class EmailSender {
             });
         });
     }
+
 }
+
+module.exports = EmailSender

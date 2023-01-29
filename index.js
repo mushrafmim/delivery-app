@@ -11,6 +11,7 @@ const shopRoutes = require('./routes/shop.routes')
 const orderRoutes = require('./routes/order.routes');
 const deliveryRoutes = require('./routes/delivery.routes')
 const { validateToken } = require('./middlewares/auth');
+const OrderHandler = require('./handlers/order.handlers');
 
 dotenv.config()
 
@@ -20,6 +21,18 @@ const port = process.env.PORT || 8000
 app.get('/', (req, res) => {
     res.render('login', { noNavbar: true })
 })
+
+app.get('/logout', UserHandler.logoutUser)
+
+app.get('/mail', (req, res) => {
+    res.render('mail', {
+        title: "2 Chicken Buckets",
+        description: "from chilaw",
+        link: "http://localhost:8000/order/claim?token=3332211"
+    })
+})
+
+app.get('/order/claim', OrderHandler.claimOrder)
 
 app.post('/', UserHandler.loginUser)
 

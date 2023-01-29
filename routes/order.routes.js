@@ -11,6 +11,6 @@ router.post("/add", OrderHandler.addOrder)
 router.get("/delete/:id", OrderHandler.deleteOrder)
 
 router.get("/list", OrderHandler.handleOrdersPage)
-router.get("/action/:id", OrderHandler.takeAction)
+router.get("/decline/:id", OrderHandler.declineOrder)
 
 module.exports = router

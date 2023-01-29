@@ -28,21 +28,11 @@
                     <td>{{status}}</td>
                     <td>{{createdAt}}</td>
                     <td>
-                        <!-- Example single danger button -->
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                Action
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item text-warning"
-                                        href="/orders/action/{{id}}?action=SHARED">ACCEPT</a>
-                                </li>
-                                <li><a class="dropdown-item text-danger"
-                                        href="/orders/action/{{id}}?action=DECLINED">DECLINE</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {{#if is_pending }}
+                        <a class="dropdown-item text-danger" href="/orders/decline/{{id}}">
+                            <button class="btn btn-danger">DECLINE</button>
+                        </a>
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}

@@ -111,6 +111,16 @@ class UserHandler {
         }
     }
 
+    static async logoutUser(req, res) {
+        try {
+            res.clearCookie('token')
+            return res.redirect('/login')
+        } catch (e) {
+            console.log(e)
+            res.redirect('/login')
+        }
+    }
+
     static async deleteOne(req, res) {
 
         const { id } = req.params

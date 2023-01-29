@@ -20,12 +20,12 @@ function validateToken(req, res, next) {
 
 
 
-function isSuperAdmin(req, res, next) {
+function isAdmin(req, res, next) {
     try {
         const { role } = req.userObj
 
         console.log(role)
-        if (role === 'superadmin') {
+        if (role === 'ADMIN') {
             return next()
         }
 
@@ -36,11 +36,26 @@ function isSuperAdmin(req, res, next) {
     }
 }
 
-function isAdmin(req, res, next) {
+function isOwner(req, res, next) {
     try {
         const { role } = req.userObj
 
-        if (role === 'admin' || role === 'superadmin') {
+        if (role === 'OWNER' || role === 'ADMIN') {
+            return next()
+        }
+
+        return res.render('login')
+    } catch (e) {
+        console.log(e)
+        res.render('login')
+    }
+}
+
+function isDelivery(req, res, next) {
+    try {
+        const { role } = req.userObj
+
+        if (role === 'DELIVERY') {
             return next()
         }
 
@@ -53,6 +68,7 @@ function isAdmin(req, res, next) {
 
 module.exports = {
     isAdmin,
-    isSuperAdmin,
+    isOwner,
+    isDelivery,
     validateToken
 }

@@ -1,0 +1,40 @@
+{{#section 'head'}}
+<title>Employees | Delivery App</title>
+{{/section}}
+<body>
+    <body>
+        {{> sAdminNavbar}}
+        <div class="container pt-3">
+            <h1>YOUR ORDERS</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">TITLE</th>
+                        <th scope="col">STATUS</th>
+                        <th scope="col">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each orders}}
+                    <tr>
+                        <th scope="row">{{id}}</th>
+                        <td>{{title}}</td>
+                        <td>{{status}}</td>
+                        <td>
+                            <!-- Example single danger button -->
+                            <div class="btn-group">
+                                <a href="/order/completed/{{id}}">
+                                    <button type="button" class="btn btn-primary" aria-expanded="false">
+                                        DELIVERED
+                                    </button>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</body>

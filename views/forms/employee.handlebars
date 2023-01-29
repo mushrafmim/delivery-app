@@ -26,7 +26,33 @@
                 <label for="textInputContactNo" class="form-label">Contact No</label>
                 <input type="tel" name="tel" value="{{employee.tel}}" class="form-control" id="textInputContactNo">
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="mb-3">
+                <label for="selectInputUserRole" class="form-label">Role</label>
+                <select required name="role" id="selectInputUserRole" class="form-select"
+                    aria-label="Default select example">
+                    <option selected></option>
+                    <option value="ADMIN">ADMIN</option>
+                    <option value="MANAGER">MANAGER</option>
+                    <option value="DELIVERY">DELIVERY</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="textInputPassword" class="form-label">Username</label>
+                <input type="text" value="{{employee.username}}" name="username" class="form-control"
+                    id="textInputUsername">
+            </div>
+            <div class="mb-3">
+                <label for="textInputPassword" class="form-label">Password</label>
+                <input type="password" value="{{employee.password}}" name="password" class="form-control"
+                    id="textInputPassword">
+            </div>
+            <div class="mb-3">
+                <label for="textInputConfirmPassword" class="form-label">Confirm Password</label>
+                <input type="password" value="{{employee.password}}" name="confirm_password" class="form-control"
+                    id="textInputConfirmPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+            <button type="reset" class="btn btn-danger">RESET</button>
         </form>
     </div>
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">

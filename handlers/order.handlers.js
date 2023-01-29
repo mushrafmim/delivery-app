@@ -36,7 +36,7 @@ class OrderHandler {
 
         const orders = await Order.findAll({
             where: {
-                hotelId: shopId,
+                shopId,
                 status: {
                     [Op.ne]: 'DECLINED'
                 }
@@ -61,7 +61,7 @@ class OrderHandler {
 
             await Order.create({
                 ...req.body,
-                hotelId: shopId
+                shopId
             })
 
             res.redirect('/orders')

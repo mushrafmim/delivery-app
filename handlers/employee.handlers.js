@@ -1,30 +1,15 @@
-const { Employee, User } = require('../models')
+const { Employee } = require('../models')
 class EmployeeHandler {
 
     static async employeePage(req, res) {
 
         let employees = await Employee.findAll({
-            raw: true,
-            include: { model: User, attributes: ['role'] }
+            raw: true
         })
 
         employees.map((employee) => {
-            let val
 
-            switch (employee['User.role']) {
-                case 'admin':
-                    val = "Admin"
-                    break;
-                case 'user':
-                    val = "Shop Owner"
-                    break;
-                default:
-                    val = "Delivery"
-                    break;
-            }
-
-            employee['role'] = val
-            employee.isDelivery = val === "Delivery"
+            employee.isDelivery = employee.role === "DELIVERY"
             return employee
         })
 

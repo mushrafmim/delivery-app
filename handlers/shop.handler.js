@@ -1,4 +1,4 @@
-const { Shop, Employee, User } = require('../models')
+const { Shop, Employee } = require('../models')
 class ShopHandler {
 
 
@@ -12,9 +12,9 @@ class ShopHandler {
 
     static async shopsForm(req, res) {
 
-        const shopOwners = await User.findAll({
+        const shopOwners = await Employee.findAll({
             where: {
-                role: 'user'
+                role: 'MANAGER'
             },
             raw: true
         })

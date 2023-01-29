@@ -1,33 +1,14 @@
 const jwt = require('jsonwebtoken')
 
 
-const { Employee, User, Shop } = require('../models')
+const { Employee, Shop } = require('../models')
 class UserHandler {
+
 
     static async userPage(req, res) {
 
-        let users = await User.findAll({
-            raw: true,
-            include: Employee
-        })
-
-        users.map((user) => {
-            let val
-
-            switch (user.role) {
-                case 'admin':
-                    val = "Admin"
-                    break;
-                case 'user':
-                    val = "Shop Owner"
-                    break;
-                default:
-                    val = "Delivery"
-                    break;
-            }
-
-            user.role = val
-            return user
+        let users = await Employee.findAll({
+            raw: true
         })
 
         res.render('users', { users })
@@ -38,16 +19,13 @@ class UserHandler {
         const { id } = req.params
 
         if (id) {
-            const user = await User.findOne({ where: { id }, raw: true })
+            const user = await Employee.findOne({ where: { id }, raw: true })
             return res.render('forms/user', { edit: true, employee: user })
         } else {
             const employees = await Employee.findAll({
                 raw: true,
-                include: {
-                    model: User,
-                    where: {
-                        role: 'user'
-                    }
+                where: {
+                    role: 'user'
                 }
             })
 
@@ -65,7 +43,7 @@ class UserHandler {
             }
 
             // Finding the user by username.
-            const user = await User.findOne({
+            const user = await Employee.findOne({
                 where: { username },
                 raw: true
             })
@@ -81,12 +59,13 @@ class UserHandler {
             }
 
             const jwtObj = {
+                userId: user.id,
                 username,
                 password,
                 role: user.role
             }
 
-            if (user.role === 'user') {
+            if (user.role === 'MANAGER') {
                 const shop = await Shop.findOne({
                     where: {
                         ownerId: user.id
@@ -108,9 +87,21 @@ class UserHandler {
 
             res.cookie('token', val)
 
-            if (user.role === 'user') {
+
+            switch (user.role) {
+                case 'MANAGER':
+                    res.redirect('/orders')
+                    break;
+                case 'ADMIN':
+                    res.redirect('/employees')
+                    break;
+                default:
+                    res.redirect('/delivery')
+                    break;
+            }
+            if (user.role === 'MANAGER') {
                 res.redirect('/orders')
-            } else if (user.role === 'superadmin') {
+            } else if (user.role === 'ADMIN') {
                 res.redirect('/employees')
             }
 
@@ -124,7 +115,7 @@ class UserHandler {
 
         const { id } = req.params
 
-        await User.destroy({
+        await Employee.destroy({
             where: { id }
         })
 
@@ -134,7 +125,7 @@ class UserHandler {
     static async addNew(req, res) {
         console.log(req.body)
 
-        await User.create(req.body)
+        await Employee.create(req.body)
         res.redirect('/users')
     }
 
@@ -144,7 +135,7 @@ class UserHandler {
 
         console.log(req.body)
 
-        const result = await User.update(data, {
+        const result = await Employee.update(data, {
             where: { id: empId }
         })
         console.log(result)

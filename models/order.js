@@ -9,15 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ Employee, Shop, User }) {
+    static associate({ Employee, Shop }) {
       // define association here
       this.belongsTo(Employee, { foreignKey: 'deliveryId' })
-      this.belongsTo(User, { foreignKey: 'sharerId' })
-      this.belongsTo(Shop, { foreignKey: 'hotelId' })
+      this.belongsTo(Shop, { foreignKey: 'shopId' })
     }
   }
   Order.init({
-    hotelId: {
+    shopId: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
@@ -30,12 +29,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     status: {
-      type: DataTypes.ENUM("PENDING", "SHARED", "CLAIMED", "DECLINED")
+      type: DataTypes.ENUM("PENDING", "COMPLETED", "CLAIMED", "DECLINED"),
+      allowNull: false,
+      defaultValue: 'PENDING'
     },
     deliveryId: {
-      type: DataTypes.INTEGER
-    },
-    sharerId: {
       type: DataTypes.INTEGER
     }
   }, {

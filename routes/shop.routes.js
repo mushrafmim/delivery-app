@@ -1,13 +1,13 @@
 const { Router } = require('express')
 const ShopHandler = require('../handlers/shop.handler')
-const { isSuperAdmin } = require('../middlewares/auth')
+const { isAdmin } = require('../middlewares/auth')
 
 
 
 const router = Router()
 
-router.get("/", isSuperAdmin, ShopHandler.shopsPage)
-router.get("/add", isSuperAdmin, ShopHandler.shopsForm)
-router.post("/add", isSuperAdmin, ShopHandler.addShop)
+router.get("/", isAdmin, ShopHandler.shopsPage)
+router.get("/add", isAdmin, ShopHandler.shopsForm)
+router.post("/add", isAdmin, ShopHandler.addShop)
 
 module.exports = router

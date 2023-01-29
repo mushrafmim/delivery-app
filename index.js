@@ -9,6 +9,7 @@ const employeeRoutes = require('./routes/employee.routes')
 const userRoutes = require('./routes/user.routes')
 const shopRoutes = require('./routes/shop.routes')
 const orderRoutes = require('./routes/order.routes');
+const deliveryRoutes = require('./routes/delivery.routes')
 const { validateToken } = require('./middlewares/auth');
 
 dotenv.config()
@@ -28,6 +29,7 @@ app.use('/employees', employeeRoutes)
 app.use('/users', userRoutes)
 app.use('/shops', shopRoutes)
 app.use('/orders', orderRoutes)
+app.use('/delivery', deliveryRoutes)
 
 
 async function main() {

@@ -11,15 +11,25 @@ class ShopHandler {
     }
 
     static async shopsForm(req, res) {
+        try {
 
-        const shopOwners = await Employee.findAll({
-            where: {
-                role: 'MANAGER'
-            },
-            raw: true
-        })
+            const shopOwners = await Employee.findAll({
+                include: {
+                    model: Shop
+                },
+                where: {
+                    role: 'MANAGER',
+                    '$Shop.ownerId$': null
+                },
+                raw: true
+            })
 
-        res.render('forms/addshop', { shopOwners })
+            res.render('forms/addshop', { shopOwners })
+        } catch (e) {
+            console.log(e)
+            res.render('/shops')
+        }
+
     }
 
     static async addShop(req, res) {

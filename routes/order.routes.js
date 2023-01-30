@@ -12,5 +12,6 @@ router.get("/delete/:id", OrderHandler.deleteOrder)
 
 router.get("/list", OrderHandler.handleOrdersPage)
 router.get("/decline/:id", OrderHandler.declineOrder)
+router.get("/delivered/:id", OrderHandler.orderDelivered)
 
 module.exports = router

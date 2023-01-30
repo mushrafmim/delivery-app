@@ -33,9 +33,11 @@
                     <td>{{createdAt}}</td>
                     <td>{{'Employee.firstname'}} {{'Employee.lastname'}}</td>
                     <td>
+                        {{#if isPending}}
                         <a href="/orders/delete/{{id}}">
                             <button class="btn btn-danger">CANCEL</button>
                         </a>
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}

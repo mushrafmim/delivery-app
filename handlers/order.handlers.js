@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken')
 const { v4 } = require('uuid')
 const handlebars = require('handlebars')
 const { Op } = require('sequelize')
-const { Employee, User, Order, Shop } = require('../models')
+const { Employee, Order, Shop } = require('../models')
 const EmailSender = require('../services/mailService')
 
 class OrderHandler {
@@ -61,7 +61,7 @@ class OrderHandler {
 
             const orders = await Order.findAll({
                 where: {
-                    hotelId: shopId,
+                    shopId,
                     status: {
                         [Op.ne]: 'DECLINED'
                     }
@@ -73,6 +73,11 @@ class OrderHandler {
                 order: [
                     ['createdAt', 'DESC']
                 ]
+            })
+
+            orders.map((order) => {
+                order['isPending'] = order.status === 'PENDING'
+                return order
             })
 
             return res.render('orders', { orders })
@@ -91,7 +96,9 @@ class OrderHandler {
             // Getting the shop id from decoded token.
             const { shopId } = req.userObj
 
-            const { title, description } = req.body
+            const { title, description, location } = req.body
+
+
 
             const order = await Order.create({
                 ...req.body,
@@ -111,12 +118,8 @@ class OrderHandler {
             const deliveryBoys = await Employee.findAll({
                 raw: true,
                 attributes: ['email', 'id'],
-                include: {
-                    model: User,
-                    as: 'User'
-                },
                 where: {
-                    '$User.empId$': null
+                    role: 'DELIVERY'
                 }
             })
 
@@ -142,7 +145,8 @@ class OrderHandler {
                     city: shop.city,
                     zipCode: shop.zipCode,
                     description: description,
-                    link: `http://localhost:8000/order/claim?token=${token}`
+                    location: location,
+                    link: `http://localhost:3000/order/claim?token=${token}`
                 })
 
                 // Sending email
@@ -180,6 +184,7 @@ class OrderHandler {
     static async claimOrder(req, res) {
         try {
             const { token } = req.query
+
             const decoded = jwt.verify(token, process.env.SECRET_KEY)
 
             const { orderId, userId } = decoded
@@ -198,6 +203,23 @@ class OrderHandler {
             }
         } catch (e) {
             res.send("Error")
+        }
+    }
+
+    static async orderDelivered(req, res) {
+        try {
+            const { id } = req.params
+
+            const result = await Order.update(
+                { status: 'DELIVERED' },
+                { where: { id } }
+            )
+
+            res.redirect('/delivery')
+
+        } catch (e) {
+            console.log(e)
+            res.redirect('/delivery')
         }
     }
 

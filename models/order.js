@@ -33,6 +33,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 'PENDING'
     },
+    location: {
+      type: DataTypes.STRING
+    },
     deliveryId: {
       type: DataTypes.INTEGER
     }

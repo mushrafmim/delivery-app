@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken')
 
 
 const { Employee, Shop } = require('../models')
+
+
 class UserHandler {
 
 
@@ -82,6 +84,8 @@ class UserHandler {
                 jwtObj.shopId = shop.id;
             }
 
+            console.log(jwtObj)
+
             // Getting the token.
             const val = await jwt.sign(jwtObj, process.env.SECRET_KEY)
 
@@ -98,11 +102,6 @@ class UserHandler {
                 default:
                     res.redirect('/delivery')
                     break;
-            }
-            if (user.role === 'MANAGER') {
-                res.redirect('/orders')
-            } else if (user.role === 'ADMIN') {
-                res.redirect('/employees')
             }
 
         } catch (e) {
@@ -129,14 +128,14 @@ class UserHandler {
             where: { id }
         })
 
-        res.redirect('/users')
+        res.redirect('/employees')
     }
 
     static async addNew(req, res) {
         console.log(req.body)
 
         await Employee.create(req.body)
-        res.redirect('/users')
+        res.redirect('/employees')
     }
 
     static async edit(req, res) {
@@ -149,7 +148,7 @@ class UserHandler {
             where: { id: empId }
         })
         console.log(result)
-        res.redirect('/users')
+        res.redirect('/employees')
     }
 }
 

@@ -9,7 +9,11 @@ module.exports = `<!DOCTYPE html>
         <dt>DESCRIPTION</dt>
         <dd>{{description}}</dd>
     </dl>
-    <a href="{{link}}">
+    <a href="{{location}}">
+        CHECK LOCATION
+    </a>
+    <br />
+    <a href="{{link}}" target="_blank">
         <button class="btn btn-primary">CLAIM ORDER</button>
     </a>
 </body>`

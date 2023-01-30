@@ -24,7 +24,6 @@ function isAdmin(req, res, next) {
     try {
         const { role } = req.userObj
 
-        console.log(role)
         if (role === 'ADMIN') {
             return next()
         }

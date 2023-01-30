@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.31, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: deliverydb
 -- ------------------------------------------------------
--- Server version	8.0.31-0ubuntu0.22.04.1
+-- Server version	8.0.32-0buntu0.22.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -21,7 +21,7 @@
 
 LOCK TABLES `employee` WRITE;
 /*!40000 ALTER TABLE `employee` DISABLE KEYS */;
-INSERT INTO `employee` VALUES (1,'Mohamed','Mushraf','mushrafmim@gmail.com','94768597177','2023-01-24 16:36:13','2023-01-24 16:36:13'),(2,'Mohamed','Muaadh','muard11online@gmail.com','94765555555','2023-01-24 13:08:36','2023-01-24 18:34:03'),(3,'Baqir','Habeeb','baqirhabeeb@gmail.com','94716512518','2023-01-24 13:14:19','2023-01-24 13:14:19'),(6,'Musab','Mahmoodh','musabmah70707@gmail.com','94768306127','2023-01-25 14:51:42','2023-01-25 14:51:42');
+INSERT INTO `employee` VALUES (1,'Mohamed','Mushraf','mushrafmim@gmail.com','94768597177','ADMIN','mushrafmim','123','2023-01-30 17:22:54','2023-01-30 17:22:54'),(2,'Mohamed','Muaadh','muardh11online@gmail.com','94776566427','MANAGER','manager','123','2023-01-30 12:00:49','2023-01-30 12:00:49'),(3,'Baqir','Habeeb','baqirhabeeb@gmail.com','94764773793','DELIVERY','delivery','123','2023-01-30 13:44:55','2023-01-30 13:44:55'),(4,'Mohamed','Mushraf','imushraf1234@gmail.com','94702549775','DELIVERY','delivery2','123','2023-01-30 13:45:37','2023-01-30 13:45:37'),(5,'Musab','Mahmoodh','musabmah70707@gmail.com','94768306127','DELIVERY','musabm','123','2023-01-30 14:04:01','2023-01-30 14:04:01');
 /*!40000 ALTER TABLE `employee` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -31,7 +31,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (32,'123','123',1,'CLAIMED',1,NULL,'2023-01-24 15:53:18','2023-01-24 15:53:36'),(33,'123','123',1,'CLAIMED',1,NULL,'2023-01-24 16:09:24','2023-01-24 16:09:36'),(34,'Two Chicken Buckets to Katubedda','some description',1,'PENDING',NULL,NULL,'2023-01-25 14:52:43','2023-01-25 14:52:43');
+INSERT INTO `order` VALUES (7,'123','123',1,'DELIVERED',4,'','2023-01-30 14:25:12','2023-01-30 15:15:03'),(9,'BUTTER CRUISCANT','2 - BUTTER CRUISSANT',1,'CLAIMED',4,'https://www.google.com/maps/search/?api=1&query=46.1511460039755%2C2.7632064819335866','2023-01-30 15:37:01','2023-01-30 15:37:20');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -41,18 +41,8 @@ UNLOCK TABLES;
 
 LOCK TABLES `shop` WRITE;
 /*!40000 ALTER TABLE `shop` DISABLE KEYS */;
-INSERT INTO `shop` VALUES (1,'KFC - Moratuwa','234','Galle Road','Moratuwa','43000','moratuwa@kfc.lk',NULL,NULL,2,'94775555555','2023-01-24 13:10:47','2023-01-24 13:10:47');
+INSERT INTO `shop` VALUES (1,'KFC - MORATUWA','323','Colombo Road','Moratuwa','10400','moratuwa@kfc.lk',NULL,NULL,2,'94771234567','2023-01-30 12:02:15','2023-01-30 12:02:15');
 /*!40000 ALTER TABLE `shop` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,1,'superadmin','superadmin','123','2023-01-24 16:37:59','2023-01-24 16:37:59'),(2,2,'user','owner','123','2023-01-24 13:09:00','2023-01-24 13:09:00');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -64,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-25 20:36:49
+-- Dump completed on 2023-01-30 21:19:49

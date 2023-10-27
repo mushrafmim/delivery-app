@@ -1,8 +1,6 @@
 const app = require('./server')
 const dotenv = require('dotenv');
-const ShopHandler = require('./handlers/shop.handler');
 const { sequelize } = require('./models');
-const EmployeeHandler = require('./handlers/employee.handlers');
 const UserHandler = require('./handlers/user.handler');
 
 const employeeRoutes = require('./routes/employee.routes')
@@ -12,13 +10,16 @@ const orderRoutes = require('./routes/order.routes');
 const deliveryRoutes = require('./routes/delivery.routes')
 const { validateToken } = require('./middlewares/auth');
 const OrderHandler = require('./handlers/order.handlers');
+const EmployeeHandler = require('./handlers/employee.handlers');
+const DeliveryHandler = require('./handlers/delivery.handler')
+const ShopHandler = require('./handlers/shop.handler')
 
 dotenv.config()
 
 
 const port = process.env.PORT || 8000
 
-app.get('/', (req, res) => {
+app.get('/login', (req, res) => {
     res.render('login', { noNavbar: true })
 })
 
@@ -37,6 +38,21 @@ app.get('/order/claim', OrderHandler.claimOrder)
 app.post('/', UserHandler.loginUser)
 
 app.use(validateToken)
+
+app.get('/', (req, res) => {
+
+    switch (req.userObj.role) {
+        case "ADMIN":
+            return EmployeeHandler.employeePage
+        case "OWNER":
+            return ShopHandler.shopsPage
+        case "DELIVERY":
+            return DeliveryHandler.deliveryPage
+        default:
+            break;
+    }
+    return
+})
 
 app.use('/employees', employeeRoutes)
 app.use('/users', userRoutes)

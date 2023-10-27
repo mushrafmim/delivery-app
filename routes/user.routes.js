@@ -9,9 +9,6 @@ const router = Router()
 
 router.use(isAdmin)
 
-router.route("/")
-    .get(UserHandler.userPage)
-
 router.route("/add")
     .post(UserHandler.addNew)
 

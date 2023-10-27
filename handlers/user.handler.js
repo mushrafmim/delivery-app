@@ -7,16 +7,6 @@ const { Employee, Shop } = require('../models')
 class UserHandler {
 
 
-    static async userPage(req, res) {
-
-        let users = await Employee.findAll({
-            raw: true
-        })
-
-        res.render('users', { users })
-    }
-
-
     static async userForm(req, res) {
         const { id } = req.params
 
